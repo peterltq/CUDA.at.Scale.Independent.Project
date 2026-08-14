@@ -36,12 +36,19 @@ NVCC = /usr/local/cuda/bin/nvcc
 CXX = g++
 CXXFLAGS = -std=c++11 -I/usr/local/cuda/include -Iinclude
 LDFLAGS = -L/usr/local/cuda/lib64 -lcudart -lnppc -lnppial -lnppicc -lnppidei -lnppif -lnppig -lnppim -lnppist -lnppisu -lnppitc
+LDFLAGS += -lnppisu_static -lnppif_static -lnppc_static -lculibos -lfreeimage
+
+# Common includes and paths for CUDA
+INCLUDES := -ICommon 
+INCLUDES += -ICommon/UtilNPP
 
 # Define directories
 SRC_DIR = src
 BIN_DIR = bin
 DATA_DIR = data
 LIB_DIR = lib
+SRC = src/imageRotateNPP.cpp
+TARGET = bin/imageRotateNPP.exe
 
 # Define the default rule
 all: $(TARGET)
@@ -49,7 +56,11 @@ all: $(TARGET)
 # Rule for building the target executable
 $(TARGET): $(SRC)
 	mkdir -p $(BIN_DIR)
-	$(NVCC) $(CXXFLAGS) $(SRC) -o $(TARGET) $(LDFLAGS)
+	$(NVCC) $(CXXFLAGS) ${INCLUDES} $(SRC) -o $(TARGET) $(LDFLAGS)
+
+# Run
+run:
+	${TARGET}
 
 # Clean up
 clean:
