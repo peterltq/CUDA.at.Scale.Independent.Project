@@ -1,4 +1,4 @@
-# Rotate a grey-scale images by 45 degree. 
+# Rotate a grey-scale image by 45 degree. 
 
 ## Overview
 This is a image tool that rotates a grey-scale image by 45 degree and output it a file. 
